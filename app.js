@@ -162,7 +162,6 @@ function MarkCellHandler(event) {
 
 	ChangeFlag(icon)
 	UpdateBombsCounter(icon)
-	CheckMarkBomb(this.x, this.y)
 }
 
 function EndGame(message) {
