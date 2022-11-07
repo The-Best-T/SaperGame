@@ -5,7 +5,7 @@ const bombsCountElem = document.querySelector('#bombs-count')
 const gameNameElem = document.querySelector('#game-name')
 
 let bombsCount
-let marksCOunt
+let openedCells
 let field
 let gameStatus = false
 let seconds
@@ -26,7 +26,7 @@ function InitializeGame() {
 	gameNameElem.style.zIndex = -1
 
 	seconds = 0
-    timerElem.innerHTML='00:00'
+	timerElem.innerHTML = '00:00'
 
 	for (let i = 0; i < 10; i++) {
 		for (let j = 0; j < 10; j++) {
@@ -48,7 +48,7 @@ function InitializeGame() {
 	}
 
 	bombsCount = 10
-	marksCOunt = 0
+	openedCells = 0
 
 	bombsCountElem.innerHTML = bombsCount
 
@@ -122,6 +122,9 @@ function OpenCell(cell, x, y) {
 		EndGame('Loose')
 	}
 	if (iconNumber === 0) QueueOpen(x, y)
+
+	openedCells++
+	if (openedCells === 90) EndGame('Win')
 }
 
 function SetIcon(cell, x, y) {
@@ -162,19 +165,10 @@ function MarkCellHandler(event) {
 	CheckMarkBomb(this.x, this.y)
 }
 
-function CheckMarkBomb(x, y) {
-	if (field[x][y] !== 10) return
-
-	marksCOunt++
-	if (marksCOunt == 10) {
-		EndGame('Win')
-	}
-}
-
 function EndGame(message) {
 	alert(message)
 	gameStatus = false
-    clearInterval(timerId)
+	clearInterval(timerId)
 }
 
 function ChangeFlag(icon) {
